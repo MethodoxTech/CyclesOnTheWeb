@@ -10,7 +10,9 @@ Each release is a git tag and a folder of the same name. With jsDelivr:
 import { renderThreeScene } from 'https://cdn.jsdelivr.net/gh/MethodoxTech/CyclesOnTheWeb@v0.2.0/v0.2.0/cycles.min.js';
 ```
 
-A tag can also be replaced by the commit that published the release, which pins the files just as firmly: v0.1.0 is commit `82a3fd3`, so `https://cdn.jsdelivr.net/gh/MethodoxTech/CyclesOnTheWeb@82a3fd3/v0.1.0/cycles.min.js` serves the same bytes. The Versions table below names the commit of every release.
+A tag can also be replaced by the commit that published the release, which pins the files just as firmly and works before the tag exists: v0.2.0 is commit `513d4f4eb5179a5f854c0f1e6696db25b10b2c15`, so `https://cdn.jsdelivr.net/gh/MethodoxTech/CyclesOnTheWeb@513d4f4eb5179a5f854c0f1e6696db25b10b2c15/v0.2.0/cycles.min.js` loads this release. The Versions table below names the commit of every release.
+
+jsDelivr sometimes answers a request for a `.min.js` file with its own Terser minification of the `.js` file beside it, and says so in a comment at the top: on the day v0.2.0 was published, the full commit hash above served the published `cycles.min.js` byte for byte, while the short hash `513d4f4`, and every form of the v0.1.0 URL, served jsDelivr's minification of `cycles.js`. Both are the same code. When the exact published bytes matter (for subresource integrity, say), load `cycles.js`, which jsDelivr serves unchanged.
 
 Or, without a CDN in between, `https://raw.githubusercontent.com/MethodoxTech/CyclesOnTheWeb/v0.2.0/v0.2.0/cycles.min.js` (raw.githubusercontent serves JavaScript as text/plain, so browsers will not execute it as a module; use jsDelivr or host the files yourself).
 
@@ -51,7 +53,7 @@ console.log(renderer.backend, renderer.fallbackReason ?? '');
 
 | Version | Notes |
 | --- | --- |
-| [v0.2.0](v0.2.0) | Principled coat, sheen and anisotropy (three.js clearcoat, sheen and anisotropy map onto them) and Filter Glossy; Cycles' light tree; adaptive sampling, albedo and normal passes and a denoiser hook; nearest-first BVH traversal and a scene shared by the CPU workers through SharedArrayBuffer on cross-origin isolated pages; `renderThreeScene`. Built from the source repository at `c7a9acf`. |
+| [v0.2.0](v0.2.0) (commit `513d4f4`) | Principled coat, sheen and anisotropy (three.js clearcoat, sheen and anisotropy map onto them) and Filter Glossy; Cycles' light tree; adaptive sampling, albedo and normal passes and a denoiser hook; nearest-first BVH traversal and a scene shared by the CPU workers through SharedArrayBuffer on cross-origin isolated pages; `renderThreeScene`. Built from the source repository at `c7a9acf`. |
 | [v0.1.0](v0.1.0) (commit `82a3fd3`) | First release: Cycles' integrator on the CPU (workers) and WebGPU (wavefront kernels); Principled, Diffuse, Glossy, Glass, Emission and Transparent materials; point, spot, sun, area and mesh lights and an importance-sampled HDR environment; three.js adapter. |
 
 ## License
