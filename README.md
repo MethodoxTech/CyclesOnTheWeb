@@ -10,7 +10,9 @@ Each release is a git tag and a folder of the same name. With jsDelivr:
 import { createRenderer, fromThreeScene, filmToRGBA8 } from 'https://cdn.jsdelivr.net/gh/MethodoxTech/CyclesOnTheWeb@v0.1.0/v0.1.0/cycles.min.js';
 ```
 
-or, without a CDN in between, `https://raw.githubusercontent.com/MethodoxTech/CyclesOnTheWeb/v0.1.0/v0.1.0/cycles.min.js` (raw.githubusercontent serves JavaScript as text/plain, so browsers will not execute it as a module; use jsDelivr or host the files yourself).
+A tag can also be replaced by the commit that published the release, which pins the files just as firmly: v0.1.0 is commit `82a3fd3`, so `https://cdn.jsdelivr.net/gh/MethodoxTech/CyclesOnTheWeb@82a3fd3/v0.1.0/cycles.min.js` serves the same bytes.
+
+Or, without a CDN in between, `https://raw.githubusercontent.com/MethodoxTech/CyclesOnTheWeb/v0.1.0/v0.1.0/cycles.min.js` (raw.githubusercontent serves JavaScript as text/plain, so browsers will not execute it as a module; use jsDelivr or host the files yourself).
 
 The CPU backend starts its workers from `cycles-worker.js` in the same folder. Browsers only start same-origin workers, so when the bundle comes from a CDN the library starts each worker through a small blob module that imports the CDN script; nothing needs configuring. To host the worker elsewhere, pass `createRenderer({ workerUrl })`.
 
@@ -38,7 +40,7 @@ console.log(renderer.backend, renderer.fallbackReason ?? '');
 
 | Version | Notes |
 | --- | --- |
-| [v0.1.0](v0.1.0) | First release: Cycles' integrator on the CPU (workers) and WebGPU (wavefront kernels); Principled, Diffuse, Glossy, Glass, Emission and Transparent materials; point, spot, sun, area and mesh lights and an importance-sampled HDR environment; three.js adapter. |
+| [v0.1.0](v0.1.0) (commit `82a3fd3`) | First release: Cycles' integrator on the CPU (workers) and WebGPU (wavefront kernels); Principled, Diffuse, Glossy, Glass, Emission and Transparent materials; point, spot, sun, area and mesh lights and an importance-sampled HDR environment; three.js adapter. |
 
 ## License
 
