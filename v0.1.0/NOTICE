@@ -1,0 +1,13 @@
+Cycles on the Web
+Copyright 2026 Methodox Technologies, Inc.
+
+This product is a port of Cycles, the path tracer of Blender, to TypeScript and WGSL.
+
+Cycles
+Copyright 2011-2026 Blender Foundation and Blender authors
+https://github.com/blender/cycles
+Licensed under the Apache License, Version 2.0.
+
+Files in this repository that derive from Cycles say so in a header comment naming the Cycles source file they were ported from. Parts of Cycles' microfacet code are themselves adapted from Open Shading Language (Copyright 2009-2010 Sony Pictures Imageworks Inc., et al., BSD-3-Clause), and are marked where they are ported.
+
+The precomputed BSDF energy-compensation tables (Cycles' src/scene/shader.tables) are not stored in this repository: scripts/fetch-tables.mjs downloads them from the Cycles repository at a pinned commit, checks their SHA-256, and embeds them in the build.
