@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Cycles on the Web</title>
+    <style>
+      :root { color-scheme: dark; font: 13px/1.4 system-ui, sans-serif; }
+      body { margin: 0; background: #141414; color: #ddd; }
+      header { display: flex; gap: 12px; align-items: center; padding: 8px 12px; border-bottom: 1px solid #2a2a2a; }
+      header h1 { font-size: 13px; font-weight: 600; margin: 0 8px 0 0; }
+      select, input, button { font: inherit; background: #222; color: #ddd; border: 1px solid #3a3a3a; border-radius: 4px; padding: 3px 6px; }
+      input[type='number'] { width: 5em; }
+      #status { margin-left: auto; color: #999; font-variant-numeric: tabular-nums; }
+      main { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 8px; }
+      figure { margin: 0; }
+      figcaption { color: #888; padding: 4px 0; }
+      canvas { width: 100%; aspect-ratio: 4 / 3; display: block; background: #000; border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Cycles on the Web</h1>
+      <label title="Auto uses WebGPU when the browser offers it">Backend <select id="backend"><option value="auto">Auto</option><option value="cpu">CPU</option><option value="gpu">GPU</option></select></label>
+      <label title="Samples per pixel">Samples <input id="samples" type="number" min="1" max="4096" value="256" /></label>
+      <label title="Render resolution scale">Scale <select id="scale"><option value="0.5">50%</option><option value="1" selected>100%</option></select></label>
+      <span id="status"></span>
+    </header>
+    <main>
+      <figure><canvas id="preview"></canvas><figcaption>three.js</figcaption></figure>
+      <figure><canvas id="trace"></canvas><figcaption id="traceCaption">Cycles</figcaption></figure>
+    </main>
+    <script type="importmap">
+      { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/" } }
+    </script>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
