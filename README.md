@@ -7,14 +7,14 @@ Built releases of [Cycles on the Web](https://github.com/Methodox-Technologies/D
 Each release is a git tag and a folder of the same name. With jsDelivr:
 
 ```js
-import { renderThreeScene } from 'https://cdn.jsdelivr.net/gh/MethodoxTech/CyclesOnTheWeb@v0.2.0/v0.2.0/cycles.min.js';
+import { renderThreeScene } from 'https://cdn.jsdelivr.net/gh/MethodoxTech/CyclesOnTheWeb@v0.3.0/v0.3.0/cycles.min.js';
 ```
 
 A tag can also be replaced by the commit that published the release, which pins the files just as firmly and works before the tag exists: v0.2.0 is commit `513d4f4eb5179a5f854c0f1e6696db25b10b2c15`, so `https://cdn.jsdelivr.net/gh/MethodoxTech/CyclesOnTheWeb@513d4f4eb5179a5f854c0f1e6696db25b10b2c15/v0.2.0/cycles.min.js` loads this release. The Versions table below names the commit of every release.
 
 jsDelivr sometimes answers a request for a `.min.js` file with its own Terser minification of the `.js` file beside it, and says so in a comment at the top: on the day v0.2.0 was published, the full commit hash above served the published `cycles.min.js` byte for byte, while the short hash `513d4f4`, and every form of the v0.1.0 URL, served jsDelivr's minification of `cycles.js`. Both are the same code. When the exact published bytes matter (for subresource integrity, say), load `cycles.js`, which jsDelivr serves unchanged.
 
-Or, without a CDN in between, `https://raw.githubusercontent.com/MethodoxTech/CyclesOnTheWeb/v0.2.0/v0.2.0/cycles.min.js` (raw.githubusercontent serves JavaScript as text/plain, so browsers will not execute it as a module; use jsDelivr or host the files yourself).
+Or, without a CDN in between, `https://raw.githubusercontent.com/MethodoxTech/CyclesOnTheWeb/v0.3.0/v0.3.0/cycles.min.js` (raw.githubusercontent serves JavaScript as text/plain, so browsers will not execute it as a module; use jsDelivr or host the files yourself).
 
 The CPU backend starts its workers from `cycles-worker.js` in the same folder. Browsers only start same-origin workers, so when the bundle comes from a CDN the library starts each worker through a small blob module that imports the CDN script; nothing needs configuring. To host the worker elsewhere, pass `createRenderer({ workerUrl })`.
 
@@ -25,10 +25,12 @@ const handle = renderThreeScene({ canvas, scene, camera, samples: 256, onProgres
 await handle.done; // handle.restart(), handle.stop() and handle.dispose() are there too
 ```
 
+Since v0.3.0 a mesh with a three.js `ShadowMaterial`, or any mesh with `userData.shadowCatcher = true`, is path traced as a shadow catcher: the floor itself is not drawn, only the shadows cast on it, mixed into the background by the material's colour and opacity as three.js composites them.
+
 The lower-level pieces remain:
 
 ```js
-import { createRenderer, fromThreeScene, filmToRGBA8 } from 'https://cdn.jsdelivr.net/gh/MethodoxTech/CyclesOnTheWeb@v0.2.0/v0.2.0/cycles.min.js';
+import { createRenderer, fromThreeScene, filmToRGBA8 } from 'https://cdn.jsdelivr.net/gh/MethodoxTech/CyclesOnTheWeb@v0.3.0/v0.3.0/cycles.min.js';
 
 const renderer = await createRenderer({ backend: 'auto' }); // WebGPU when available, CPU workers otherwise
 const { scene, warnings } = fromThreeScene(threeScene, threeCamera); // three.js r160 or later
@@ -53,6 +55,7 @@ console.log(renderer.backend, renderer.fallbackReason ?? '');
 
 | Version | Notes |
 | --- | --- |
+| [v0.3.0](v0.3.0) | Shadow catchers on both backends, after Cycles' own: three.js `ShadowMaterial` and `userData.shadowCatcher` map onto them, and the neutral format has `shadowCatcher` on a mesh. Scenes without one render as in v0.2.0. Built from the source repository at `8c44a0d`, the head of its [pull request 14](https://github.com/Methodox-Technologies/DivookaFrontendComponents_CyclesOnTheWeb/pull/14). |
 | [v0.2.0](v0.2.0) (commit `513d4f4`) | Principled coat, sheen and anisotropy (three.js clearcoat, sheen and anisotropy map onto them) and Filter Glossy; Cycles' light tree; adaptive sampling, albedo and normal passes and a denoiser hook; nearest-first BVH traversal and a scene shared by the CPU workers through SharedArrayBuffer on cross-origin isolated pages; `renderThreeScene`. Built from the source repository at `c7a9acf`. |
 | [v0.1.0](v0.1.0) (commit `82a3fd3`) | First release: Cycles' integrator on the CPU (workers) and WebGPU (wavefront kernels); Principled, Diffuse, Glossy, Glass, Emission and Transparent materials; point, spot, sun, area and mesh lights and an importance-sampled HDR environment; three.js adapter. |
 
