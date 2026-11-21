@@ -51,11 +51,15 @@ console.log(renderer.backend, renderer.fallbackReason ?? '');
 | `demo/` | A three.js scene previewed with three.js and path traced side by side. Serve the release folder over http(s) and open `demo/index.html`. |
 | `LICENSE`, `NOTICE` | Apache-2.0, with attribution to Cycles and the Blender Foundation. |
 
+## Denoiser weights
+
+`oidn-weights/` holds two of Intel's Open Image Denoise weight sets, for denoising Cycles' output in the browser with its albedo and normal passes; see that folder's README for where they come from and their licence. They change only when the folder's README says so, and load like the library, pinned to a commit: `https://cdn.jsdelivr.net/gh/MethodoxTech/CyclesOnTheWeb@<commit>/oidn-weights/rt_hdr_alb_nrm_small.tza`.
+
 ## Versions
 
 | Version | Notes |
 | --- | --- |
-| [v0.3.0](v0.3.0) | Shadow catchers on both backends, after Cycles' own: three.js `ShadowMaterial` and `userData.shadowCatcher` map onto them, and the neutral format has `shadowCatcher` on a mesh. Scenes without one render as in v0.2.0. Built from the source repository at `8c44a0d`, the head of its [pull request 14](https://github.com/Methodox-Technologies/DivookaFrontendComponents_CyclesOnTheWeb/pull/14). |
+| [v0.3.0](v0.3.0) (commit `9527876`) | Shadow catchers on both backends, after Cycles' own: three.js `ShadowMaterial` and `userData.shadowCatcher` map onto them, and the neutral format has `shadowCatcher` on a mesh. Scenes without one render as in v0.2.0. Built from the source repository at `8c44a0d`, the head of its [pull request 14](https://github.com/Methodox-Technologies/DivookaFrontendComponents_CyclesOnTheWeb/pull/14). |
 | [v0.2.0](v0.2.0) (commit `513d4f4`) | Principled coat, sheen and anisotropy (three.js clearcoat, sheen and anisotropy map onto them) and Filter Glossy; Cycles' light tree; adaptive sampling, albedo and normal passes and a denoiser hook; nearest-first BVH traversal and a scene shared by the CPU workers through SharedArrayBuffer on cross-origin isolated pages; `renderThreeScene`. Built from the source repository at `c7a9acf`. |
 | [v0.1.0](v0.1.0) (commit `82a3fd3`) | First release: Cycles' integrator on the CPU (workers) and WebGPU (wavefront kernels); Principled, Diffuse, Glossy, Glass, Emission and Transparent materials; point, spot, sun, area and mesh lights and an importance-sampled HDR environment; three.js adapter. |
 
